@@ -36,8 +36,8 @@ class SerializedSubscriptionQueue {
     /**
      Creates a queue in which subscriptions will be executed sequentially after previous ones have finished.
 
-    - parameter scheduler: Scheduler on which subscribption will be scheduled
-    */
+     - parameter scheduler: Scheduler on which subscribption will be scheduled
+     */
     init(scheduler: ImmediateSchedulerType) {
         self.scheduler = scheduler
     }
@@ -48,7 +48,9 @@ class SerializedSubscriptionQueue {
     func queueSubscription(observable: DelayedObservableType) {
         lock.lock(); defer { lock.unlock() }
         let execute = queue.isEmpty
-        queue.append(observable)
+        if !queue.contains { $0 === observable } {
+            queue.append(observable)
+        }
         if execute {
             // Observable is scheduled immidiately
             queue.first?.delayedSubscribe(on: scheduler)
@@ -142,8 +144,8 @@ class QueueSubscribeOn<Element>: Cancelable, ObservableType, ObserverType, Delay
     // subscription.
     func dispose() {
         if OSAtomicCompareAndSwap32(0, 1, &_isDisposed) {
+            self.queue.unsubscribe(observable: self)
             _ = queue.scheduler.schedule(()) {
-                self.queue.unsubscribe(observable: self)
                 self.serialDisposable.dispose()
                 return Disposables.create()
             }
