@@ -50,6 +50,13 @@ public class BluetoothManager {
 
     /// Implementation of Central Manager
     private let centralManager: RxCentralManagerType
+    
+    // Access to underlying cbCentralManager
+    public var cbCentralManager: CBCentralManager? {
+        guard let rxManager = centralManager as? RxCBCentralManager else { return nil }
+        return rxManager.centralManager
+    }
+
 
     /// Queue on which all observables are serialised if needed
     private let subscriptionQueue: SerializedSubscriptionQueue
