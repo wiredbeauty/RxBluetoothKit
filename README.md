@@ -1,3 +1,8 @@
+# !!! Important !!!
+_RxBluetoothKit_ est une wrapper _RxSwift_ pour _CoreBluetooth_.
+En attente d'une mise à jour majeur de cette librarie, ce fork expose les objets _CoreBluetooth_ wrappé par _RxBluetoothKit_ permettant ainsi d'utiliser ces mêmes objets lors de l'OTA via le module (IOS-Pods-DFU-Library)[https://github.com/NordicSemiconductor/IOS-Pods-DFU-Library].
+
+
 ![RxBluetoothKit Swift](http://i.imgur.com/aeT4p5o.png)
 
 [![CI Status](http://img.shields.io/travis/Polidea/RxBluetoothKit.svg?style=flat)](https://travis-ci.org/Polidea/RxBluetoothKit)
